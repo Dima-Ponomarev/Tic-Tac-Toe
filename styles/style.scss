@@ -6,24 +6,79 @@
 
 html{
     font-size: 62.5%;
+    font-family: 'Poppins', sans-serif;
 }
 
+
 .wrapper{
+    min-height: 100vh;
+    background: linear-gradient(140deg, rgba(146,203,142,1) 0%, rgb(171, 204, 163) 100%);
+}
+
+main{
     min-height: 90vh;
+    position: relative;
+}
+
+.game-content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .gameboard{
     display: flex;
     justify-content: center;
     align-items: center;
+
+    border: 2px solid rgb(154, 109, 194);
 }
 
 .game-tile{
-    border: 1px solid #aaa;
-    height: 5rem;
-    width: 5rem;
+    border: 1px solid  rgb(154, 109, 194);
+    height: 10rem;
+    width: 10rem;
 
-    font-size: 4rem;
-    text-align: center;
+    font-size: 8rem;
     user-select: none;
+    text-shadow: 1px -1px 1px #000;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgb(220, 208, 224);
+    color: rgb(105, 133, 87);
+
+    &:hover{
+        background: rgb(221, 206, 233);
+    }
+}
+
+.status-text{
+    font-size: 3rem;
+    color: rgb(105, 133, 87);
+    text-shadow: 1px -1px 1px #000;
+}
+
+.reset-btn{
+    font-family: 'Poppins', sans-serif;
+    font-size: 3rem;
+    color: rgb(219, 255, 198);
+    background: rgb(115, 190, 65);
+    cursor: pointer;
+
+    padding: 1rem;
+    margin-top: 1rem;
+
+    &:hover{
+        background: rgb(185, 167, 60);
+    }
 }

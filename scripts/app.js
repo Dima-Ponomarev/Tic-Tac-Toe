@@ -5,7 +5,11 @@ const Player = (sign) =>{
         return sign;
     };
 
-    return {occupiedTiles, getSign};
+    const reset = () =>{
+        occupiedTiles.length = 0;
+    }
+
+    return {occupiedTiles, getSign, reset};
 }
 
 const gameBoard = (() => {
@@ -18,29 +22,55 @@ const gameBoard = (() => {
         return gameboard[index]; 
     }
 
+    const reset = () =>{
+        for(let i = 0; i < gameboard.length; i++){
+            gameboard[i] = '';
+        }
+    }
+
     return {
         setTile,
-        getTile
+        getTile,
+        reset
     }
 })();
 
 const displayController = (() => {
     const gameBoardDOM = document.querySelectorAll('.game-tile');
+    const resetBtn = document.querySelector('.reset-btn');
+    const status = document.querySelector('.status-text');
+
 
     gameBoardDOM.forEach((gameTile) => {
         gameTile.addEventListener('click', (e) =>{
-            if (e.target.textContent !== '' || gameController.getGameStatus()) return;
+            if (e.target.textContent !== '' || gameController.getGameIsOver()) return;
             gameController.playRound(parseInt(e.target.dataset.index));
             updateGameboard();
         })
-    })
+    });
+
+    const resetBtnHandler = () =>{
+        setStatus("Player X's turn");
+        gameController.reset();
+        gameBoard.reset();
+        updateGameboard();
+
+    }
+
+    resetBtn.addEventListener('click', resetBtnHandler);
+
     const updateGameboard = () =>{
         gameBoardDOM.forEach((tile, index) =>{
             tile.textContent = gameBoard.getTile(index);
         })
+    };
+    
+    const setStatus = (message) =>{
+        status.textContent = message;
     }
+    
     return{
-        updateGameboard
+        setStatus
     }
 })();
 
@@ -54,20 +84,22 @@ const gameController = (() => {
         const player = getCurrentPlayer();
         player.occupiedTiles.push(tileIndex);
         gameBoard.setTile(tileIndex, player.getSign());
-
-        console.log(player.occupiedTiles);
         const winner = checkWinner(player.occupiedTiles);
-        console.log(winner)
         if (checkWinner(player.occupiedTiles)){
             gameIsOver = true;
-            console.log(`player ${player.getSign()} won`)
+            console.log('gg')
+            displayController.setStatus(`Player ${player.getSign()} has won!`);
+            return;
         }
 
         if (round === 8) {
             gameIsOver = true;
-            console.log('draw', player.occupiedTiles)
+            displayController.setStatus('Players drew!')
+            return;
         }
         round++;
+        player.getSign() === "X" ? displayController.setStatus("Player O's turn") :
+            displayController.setStatus("Player X's turn");
     } 
 
     const getCurrentPlayer = () =>{
@@ -95,12 +127,20 @@ const gameController = (() => {
         return status;
     }
 
-    const getGameStatus = () =>{
+    const getGameIsOver = () =>{
         return gameIsOver;
+    }
+
+    const reset = () =>{
+        round = 0;
+        gameIsOver = false;
+        playerO.reset();
+        playerX.reset();
     }
 
     return{
         playRound,
-        getGameStatus
+        getGameIsOver,
+        reset
     }
 })();
