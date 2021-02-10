@@ -23,12 +23,17 @@ html {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 2rem;
 }
 
 .game-tile {
   border: 1px solid #aaa;
   height: 5rem;
   width: 5rem;
+  font-size: 4rem;
+  text-align: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 /*# sourceMappingURL=style.css.map */

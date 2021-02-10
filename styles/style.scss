@@ -16,12 +16,14 @@ html{
     display: flex;
     justify-content: center;
     align-items: center;
-
-    padding: 2rem;
 }
 
 .game-tile{
     border: 1px solid #aaa;
     height: 5rem;
     width: 5rem;
+
+    font-size: 4rem;
+    text-align: center;
+    user-select: none;
 }
